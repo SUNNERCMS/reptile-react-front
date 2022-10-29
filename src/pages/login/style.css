@@ -1,0 +1,9 @@
+.login {
+  width: 400px;
+  height: 300px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+}

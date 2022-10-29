@@ -1,0 +1,12 @@
+.home-page{
+    width: 800px;
+    height: 200px;
+    border: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+}
+.home-page > button {
+    margin: 0 15px 0;
+}
