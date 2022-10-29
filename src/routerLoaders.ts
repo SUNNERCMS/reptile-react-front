@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { redirect } from "react-router-dom";
 import axios from 'axios';
 
-export const homePageLoader = () => {
+export const isLoginCheckLoader = () => {
     return axios.get('/api/isLogin')
       .then(res => {
         const isLogin = res?.data?.data;
@@ -21,7 +21,7 @@ export const homePageLoader = () => {
       })
 }
 
-export const asyncHomePageLoader = async () => {
+export const asyncIsLoginCheckLoader = async () => {
   try {
     const {
       data: {
