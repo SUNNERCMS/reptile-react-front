@@ -145,8 +145,107 @@ const LoginPage: React.FC = () => {
     ...
 }
 ```
+## v2: 爬虫接口联调+Echart展示爬取数据
+echart的的使用：  
+- 安装 echarts-for-react，  一个简单的 Apache echarts 的 React 封装。  
+- 引入使用：`import ReactECharts from 'echarts-for-react';`  
 
+```js
+    // 获取爬到的数据，并生成echart展示数据
+    const getShowDatas = () => {
+        axios.get('/api/showData')
+            .then(res => {
+                const courseData = res?.data?.data;
+                if(!isEmpty(courseData)) {
+                    setShowDatas(getEchartOptionHandle(courseData));
+                }
+            })
+            .catch((err) => {
+                // 处理错误情况
+                message.error('退出失败异常，请重试');
+            })
+    }
+```
 
+通过封装的getEchartOptionHandle方法，生成Echart的数据，涉及到的类型注解如下：
+```js
+interface CourseItem {
+    title: string;
+    count: number;
+}
+
+interface SeriesItem {
+    name: string;
+    type: string;
+    data: number[];
+}
+
+interface ResData {
+    [key: string]: CourseItem[]
+}
+```
+ 获取echart的数据配置, 类型注解的使用如下：
+```JS
+export const getEchartOptionHandle = (resData: ResData) => {
+    let legendCourseName: string[] = [];
+    let xAxisTime: string[] = [];
+    let tempData: {
+        [key: string]: number[];
+    } = {};
+    let seriesData: SeriesItem[] = []
+
+    for(let [key, valueItem] of Object.entries(resData)) {
+        xAxisTime.push(moment(Number(key)).format('MM-DD HH:mm:ss'));
+        valueItem.forEach(courseItem => {
+            const {title, count} = courseItem;
+            if(!includes(legendCourseName, title)) {
+                legendCourseName.push(title);
+            }
+            tempData[title] ? tempData[title].push(count) : (tempData[title] = [count])
+        });
+    }
+
+    for(let[key, value] of Object.entries(tempData)) {
+        seriesData.push({
+            name: key,
+            type: 'line',
+            data: value
+        });
+    }
+
+    return {
+        title: {
+            text: 'Learn-num'
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: legendCourseName
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          toolbox: {
+            feature: {
+              saveAsImage: {}
+            }
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: xAxisTime
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: seriesData
+    }
+}
+```
 
 
 
