@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
-import axios from 'axios';
+import request from '../../request';
 import { message } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { RES_STATUS } from '../../config';
@@ -11,12 +11,12 @@ const LoginPage: React.FC = () => {
 	const navigate = useNavigate();
 	// 提交表单且数据验证成功后回调事件
 	const onFinish = (values: any) => {
-		axios.post('/api/login',
+		request.post('/api/login',
 			qs.stringify({
 				password: values.password
 			}))
 			.then(res => {
-				const status = res.data.status;
+				const status = res?.status;
 				if (status === RES_STATUS.SUCCESS || status === RES_STATUS.HAD_LOGIN) {
 					message.success('登录成功');
 					navigate('/');

@@ -1,11 +1,11 @@
 import { message } from 'antd';
 import { redirect } from "react-router-dom";
-import axios from 'axios';
+import request from './request';
 
 export const isLoginCheckLoader = () => {
-    return axios.get('/api/isLogin')
+    return request.get('/api/isLogin')
       .then(res => {
-        const isLogin = res?.data?.data;
+        const isLogin: boolean = res?.data;
           if(isLogin) {
             message.success('登录成功');
             return {isLogin}
@@ -24,10 +24,8 @@ export const isLoginCheckLoader = () => {
 export const asyncIsLoginCheckLoader = async () => {
   try {
     const {
-      data: {
-        data: isLogin
-      }
-    } = await axios.get('/api/isLogin');
+      data: isLogin
+    } = await request.get('/api/isLogin');
     if(isLogin) {
       message.success('登录成功');
       return {isLogin}

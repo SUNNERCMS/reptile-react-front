@@ -1,7 +1,7 @@
 import {message, Button} from 'antd';
 import React, {useEffect, useState}from 'react';
 import {useLoaderData, useNavigate} from "react-router-dom";
-import axios from 'axios';
+import request from '../../request';
 import ReactECharts from 'echarts-for-react';
 import {isEmpty} from 'lodash';
 import {getEchartOptionHandle} from './util';
@@ -16,9 +16,9 @@ const HomePage: React.FC = () => {
 
     // 获取爬到的数据，并生成echart展示数据
     const getShowDatas = () => {
-        axios.get('/api/showData')
+        request.get('/api/showData')
             .then(res => {
-                const courseData = res?.data?.data;
+                const courseData = res?.data;
                 if(!isEmpty(courseData)) {
                     setShowDatas(getEchartOptionHandle(courseData));
                 }
@@ -35,9 +35,9 @@ const HomePage: React.FC = () => {
 
     // 退出登录
     const onLogoutHandle = () => {
-        axios.get('/api/logout')
+        request.get('/api/logout')
             .then(res => {
-                const isLogout = res?.data?.data;
+                const isLogout = res?.data;
                 if(isLogout) {
                     message.success('退出成功');
                     navigate('/login');
@@ -53,9 +53,9 @@ const HomePage: React.FC = () => {
 
     // 主动触发爬取一次数据
     const onCrowllerHandle = () => {
-        axios.get('/api/getData')
+        request.get('/api/getData')
             .then(res => {
-                const status = res?.data?.status;
+                const status = res?.status;
                 if(status === RES_STATUS.SUCCESS) {
                     message.success('爬取成功');
                     getShowDatas();
