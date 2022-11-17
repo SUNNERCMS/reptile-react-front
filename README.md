@@ -5,13 +5,12 @@
 ##### v1-1 前后端接口联调
 前端接口请求利用axios，请求的接口路径，由后端生成的路由决定，进行接口匹配之后处理相关逻辑，然后将处理结果返回给前端。  
 
-
 登录页面输入密码后的提交请求接口处理：
 ```js
 	// 提交表单且数据验证成功后回调事件
 	const onFinish = (values: any) => {
 		axios.post('/api/login',
-            // 参数进行序列化
+      // 参数进行序列化
 			qs.stringify({
 				password: values.password
 			}))
