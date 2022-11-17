@@ -1,6 +1,5 @@
 import {includes} from 'lodash';
 import moment from 'moment';
-
 interface CourseItem {
     title: string;
     count: number;

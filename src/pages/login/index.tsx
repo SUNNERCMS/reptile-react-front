@@ -1,10 +1,10 @@
+import qs from 'qs';
+import { message } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import request from '../../request';
-import { message } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { RES_STATUS } from '../../config';
-import qs from 'qs';
 import './style.css';
 
 const LoginPage: React.FC = () => {

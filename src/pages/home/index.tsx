@@ -1,9 +1,9 @@
+import {isEmpty} from 'lodash';
 import {message, Button} from 'antd';
 import React, {useEffect, useState}from 'react';
+import ReactECharts from 'echarts-for-react';
 import {useLoaderData, useNavigate} from "react-router-dom";
 import request from '../../request';
-import ReactECharts from 'echarts-for-react';
-import {isEmpty} from 'lodash';
 import {getEchartOptionHandle} from './util';
 import {RES_STATUS} from '../../config'
 import './style.css';
